@@ -123,9 +123,9 @@ Eşitlik durumunda bir sonraki adıma göre karar verilecektir.
 1. **Projeyi klonlayın:**
 
    ```bash
-   git clone <repo-url> pos-selection  
-   
-   cd pos-selection
+   git clone https://github.com/onurozkir/pos-selection.git pos-selection  
+
+      cd pos-selection
    ```
 
 2. **Config:**
@@ -166,6 +166,17 @@ Eşitlik durumunda bir sonraki adıma göre karar verilecektir.
 5. **Container’lar ayağa kalktıktan sonra:**
 
   - API: `http://localhost:5000`
+    
+    ```json
+    // cURL for Postman
+     
+    curl --location 'http://localhost:5000/v1/pos-selection' \
+    --header 'Content-Type: application/json' \
+    --data '{ "amount": 362.22, "installment": 6, "currency": "TRY", "card_type": "credit" }
+    '
+  
+    ```
+
   - HealthCheck endpoint’leri:
     - GET `/health/live`
     - GET `/health/ready`
