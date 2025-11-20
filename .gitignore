@@ -1,0 +1,110 @@
+﻿# -----------------------------------
+# OS FILES
+# -----------------------------------
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# Linux
+*~
+
+# -----------------------------------
+# VISUAL STUDIO / VS CODE / RIDER
+# -----------------------------------
+.vs/
+.vscode/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# -----------------------------------
+# DOTNET BUILD ARTIFACTS
+# -----------------------------------
+bin/
+obj/
+out/
+Debug/
+Release/
+x64/
+x86/
+*.dll
+*.exe
+*.pdb
+
+# ASP.NET temp files
+wwwroot/lib/
+wwwroot/node_modules/
+
+# NuGet
+*.nupkg
+*.snupkg
+packages/
+project.lock.json
+project.assets.json
+
+# -----------------------------------
+# DOCKER / CONTAINERS
+# -----------------------------------
+docker-compose.override.yml
+*.pid
+*.log
+logs/
+*.tar
+*.img
+
+# -----------------------------------
+# NODE / FRONTEND
+# -----------------------------------
+node_modules/
+npm-debug.log
+yarn-error.log
+dist/
+build/
+
+# -----------------------------------
+# SECRETS / CONFIG
+# -----------------------------------
+appsettings.Development.json
+appsettings.Local.json
+.env
+secrets.json
+
+# -----------------------------------
+# QUARTZ SCHEDULER FILES
+# -----------------------------------
+quartz-*.xml
+
+# -----------------------------------
+# MISC
+# -----------------------------------
+*.log
+*.tmp
+*.temp
+*.bak
+*.swp
+
+# Python virtual env (bazı projelerde olabiliyor)
+venv/
+__pycache__/
+
+# JetBrains Rider DotNet Tools
+.idea/
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.backup
+
+# Ignite UI cache
+ignite-ui-cache/

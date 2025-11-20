@@ -1,0 +1,84 @@
+﻿version: "3.9"
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: paytr_pos
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./docker/postgres/init.sql:/docker-entrypoint-initdb.d/001_add_insert.sql:ro
+
+  redis:
+    image: redis:7-alpine
+    container_name: redis
+    restart: always
+    ports:
+      - "6379:6379"
+
+  api:
+    build:
+      context: .
+      dockerfile: src/web/PayTR.PosSelection.API/Dockerfile
+    container_name: api 
+    depends_on:
+      - postgres
+      - redis
+      - otel-collector
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Production"
+      ASPNETCORE_URLS: "http://+:8080"
+      ConnectionStrings__Postgres: "Host=postgres;Port=5432;Database=paytr_pos;Username=postgres;Password=postgres"
+      ConnectionStrings__Redis: "redis:6379"
+      
+      PosSelectionMultiplier__TRY: "1.00"
+      PosSelectionMultiplier__USD: "1.01"
+    ports:
+      - "5000:8080"   # API container içi portu 8080 ise, dışarı 5000 veriyoruz; gerekirse değiştir
+        
+  otel-collector:
+    image: otel/opentelemetry-collector:latest
+    container_name: otel_collector
+    command: [ "--config=/etc/otel-collector-config.yaml" ]
+    volumes:
+      - ./otel-collector-config.yaml:/etc/otel-collector-config.yaml:ro
+    ports:
+      - "4317:4317"   # OTLP gRPC
+      - "8889:8889"   # Prometheus metrics endpoint (Collector → Prometheus)
+        
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    ports:
+      - "9090:9090"
+    depends_on:
+      - otel-collector
+
+  jobs:
+    build:
+      context: .
+      dockerfile: src/jobs/PayTR.PosSelection.Jobs/Dockerfile
+    container_name: jobs 
+    depends_on:
+      - postgres
+      - redis
+      - otel-collector
+    environment:
+      DOTNET_ENVIRONMENT: "Production"
+      ConnectionStrings__Postgres: "Host=postgres;Port=5432;Database=paytr_pos;Username=postgres;Password=postgres"
+      ConnectionStrings__Redis: "redis:6379"
+      
+      RatiosJob__Cron: "1 59 23 * * ?" #"1 59 23 * * ?"
+      RatiosJob__RatiosApiUrl: "https://6899a45bfed141b96ba02e4f.mockapi.io/paytr/ratios"
+      RatiosJob__HttpTimeoutSeconds: "10"
+
+volumes:
+  postgres_data:

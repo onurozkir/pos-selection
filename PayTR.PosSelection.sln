@@ -1,0 +1,59 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B60C9C35-0619-4AB9-8372-D228E192D1BE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{CD6A5E3C-A464-49FD-B6C9-5DC909585657}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "web", "web", "{707AE4CE-D87A-4D73-A3E0-24AFDEBFD143}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "jobs", "jobs", "{67C7C9C4-BAA3-4DE9-94AA-C22A5F925BA6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "infra", "infra", "{D167B713-BEE2-4F09-B233-4249A47A9F88}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PayTR.PosSelection.API", "src\web\PayTR.PosSelection.API\PayTR.PosSelection.API.csproj", "{D1022C8D-BEAA-446B-BC1D-EA2CDF180B60}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PayTR.PosSelection.Jobs", "src\jobs\PayTR.PosSelection.Jobs\PayTR.PosSelection.Jobs.csproj", "{877F362C-41FD-4398-B13C-C28AFF427550}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PayTR.PosSelection.Infrastructure", "src\infra\PayTR.PosSelection.Infrastructure\PayTR.PosSelection.Infrastructure.csproj", "{1AFC0C55-5EC5-406A-A31B-2414B0280089}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PayTR.PosSelection.Tests", "tests\PayTR.PosSelection.Tests\PayTR.PosSelection.Tests.csproj", "{F039C68E-38FF-485A-8FE5-AD5494ABE67A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F039C68E-38FF-485A-8FE5-AD5494ABE67A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F039C68E-38FF-485A-8FE5-AD5494ABE67A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F039C68E-38FF-485A-8FE5-AD5494ABE67A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F039C68E-38FF-485A-8FE5-AD5494ABE67A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1022C8D-BEAA-446B-BC1D-EA2CDF180B60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1022C8D-BEAA-446B-BC1D-EA2CDF180B60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1022C8D-BEAA-446B-BC1D-EA2CDF180B60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1022C8D-BEAA-446B-BC1D-EA2CDF180B60}.Release|Any CPU.Build.0 = Release|Any CPU
+		{877F362C-41FD-4398-B13C-C28AFF427550}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{877F362C-41FD-4398-B13C-C28AFF427550}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{877F362C-41FD-4398-B13C-C28AFF427550}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{877F362C-41FD-4398-B13C-C28AFF427550}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1AFC0C55-5EC5-406A-A31B-2414B0280089}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1AFC0C55-5EC5-406A-A31B-2414B0280089}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1AFC0C55-5EC5-406A-A31B-2414B0280089}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1AFC0C55-5EC5-406A-A31B-2414B0280089}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F039C68E-38FF-485A-8FE5-AD5494ABE67A} = {CD6A5E3C-A464-49FD-B6C9-5DC909585657}
+		{707AE4CE-D87A-4D73-A3E0-24AFDEBFD143} = {B60C9C35-0619-4AB9-8372-D228E192D1BE}
+		{D1022C8D-BEAA-446B-BC1D-EA2CDF180B60} = {707AE4CE-D87A-4D73-A3E0-24AFDEBFD143}
+		{67C7C9C4-BAA3-4DE9-94AA-C22A5F925BA6} = {B60C9C35-0619-4AB9-8372-D228E192D1BE}
+		{877F362C-41FD-4398-B13C-C28AFF427550} = {67C7C9C4-BAA3-4DE9-94AA-C22A5F925BA6}
+		{D167B713-BEE2-4F09-B233-4249A47A9F88} = {B60C9C35-0619-4AB9-8372-D228E192D1BE}
+		{1AFC0C55-5EC5-406A-A31B-2414B0280089} = {D167B713-BEE2-4F09-B233-4249A47A9F88}
+	EndGlobalSection
+EndGlobal
