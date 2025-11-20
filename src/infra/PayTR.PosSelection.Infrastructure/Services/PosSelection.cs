@@ -72,6 +72,9 @@ namespace PayTR.PosSelection.Infrastructure.Services
                 throw new NotFoundException("No POS information could be found.");
             }
             
+            // cache geri ekle
+            await _redis.Set(version, snapshotJson);
+            
             // get ratios
             var ratios = JsonSerializer.Deserialize<List<PosRatio>>(snapshotJson!, _jsonSerializerOptions)
                          ?? new List<PosRatio>();
