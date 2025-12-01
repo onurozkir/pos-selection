@@ -86,7 +86,7 @@ var builder = Host.CreateDefaultBuilder(args)
                 var cronExpr = configuration[$"{RatiosJobOptions.SectionName}:Cron"]
                                ?? "0/10 * * * * ?";
 
-                // 23:59:00
+                // 23:59:01
                 q.AddTrigger(opts => opts
                     .ForJob(jobKey)
                     .WithIdentity($"{nameof(RatiosJobs)}-trigger")

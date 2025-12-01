@@ -6,8 +6,7 @@ using PayTR.PosSelection.Infrastructure.Interfaces.PosRatios;
 using PayTR.PosSelection.Infrastructure.Interfaces.PosSelection;
 using PayTR.PosSelection.Infrastructure.Interfaces.Redis;
 using PayTR.PosSelection.Infrastructure.Models.Exceptions;
-using PayTR.PosSelection.Infrastructure.Models.PosRatios;
-using PayTR.PosSelection.Infrastructure.Models.PosSelection.Requests;
+using PayTR.PosSelection.Infrastructure.Models.PosRatios; 
 using PayTR.PosSelection.Infrastructure.Models.PosSelection.Responses;
 using StackExchange.Redis;
 
@@ -72,7 +71,10 @@ namespace PayTR.PosSelection.Infrastructure.Services
                 throw new NotFoundException("No POS information could be found.");
             }
             
+            // redis'te yok ama db'de var ise db'deki değeri redis'e yazmak gerekliydi
+            
             // get ratios
+            // çok fazla serialize ediyoruz RedisJSON kurulup direk json kaydedilebilir
             var ratios = JsonSerializer.Deserialize<List<PosRatio>>(snapshotJson!, _jsonSerializerOptions)
                          ?? new List<PosRatio>();
             
@@ -82,6 +84,7 @@ namespace PayTR.PosSelection.Infrastructure.Services
             } 
             
             // filter request
+            // RedisJSON kurmanın diğer avantajı filtrelemeyi redis'e yıkabiliridk ama bu sefer db'de de satır satır kaydetmemiz lazımdı
             var filtered = ratios
                 .Where(r => r.Installment == request.Installment)
                 .Where(r => string.Equals(r.Currency, request.Currency, StringComparison.OrdinalIgnoreCase))
@@ -108,6 +111,7 @@ namespace PayTR.PosSelection.Infrastructure.Services
             var candidates = filtered
                 .Select(r =>
                 {
+                    // buradan okumak maliyetli bunu bootstrap'da inject etmek gerekebilirdi
                     calculator.Multiplier = decimal.Parse(_configuration[$"PosSelectionMultiplier:{calculator.Currency}"], CultureInfo.InvariantCulture);
                     var price = calculator.Calculate(request.Amount, r.CommissionRate, r.MinFee);
                     var payableTotal = Math.Round(request.Amount + price, 2, MidpointRounding.AwayFromZero);
@@ -124,6 +128,7 @@ namespace PayTR.PosSelection.Infrastructure.Services
                 .ThenBy(c => c.Ratio.PosName, StringComparer.OrdinalIgnoreCase)
                 .FirstOrDefault();
 
+            // gereksiz kaldı First() yapılsa belki
             if (best == null)
             {
                 throw new NotFoundException("No POS information could be found.");
@@ -175,6 +180,7 @@ namespace PayTR.PosSelection.Infrastructure.Services
         
         private static string BuildCacheKey(string version, Models.PosSelection.Requests.PosSelection request)
         {
+            // cache hit mi? cpu cost mu?
             var normalizedAmount = request.Amount.ToString("0.##", CultureInfo.InvariantCulture);
             
             var currency = request.Currency.ToUpperInvariant();
