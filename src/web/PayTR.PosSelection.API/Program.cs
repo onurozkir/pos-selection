@@ -17,7 +17,7 @@ var services = builder.Services;
 
 
 var redisConn = builder.Configuration.GetSection("Redis")["ConnectionString"];
-var postgresConn = builder.Configuration.GetSection("ConnectionStrings")["DefaultConnection"];
+var postgresConn = builder.Configuration.GetSection("Postgres")["ConnectionString"];
 
 services.AddInfra(builder.Configuration);
 

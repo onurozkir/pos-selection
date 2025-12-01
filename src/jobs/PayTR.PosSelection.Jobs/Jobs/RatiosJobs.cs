@@ -27,6 +27,8 @@ namespace PayTR.PosSelection.Jobs.Jobs
             _redis = redis;
         }
          
+        // redis sürekli await ile set delete yapıyor bunları LUA script ile yapabilirdik.
+        // finally bloğu ekleyip await _redis.Delete("pos-selection:cache-disabled"); eklenmeliydi
         public async Task Execute(IJobExecutionContext context)
         { 
             
@@ -57,6 +59,7 @@ namespace PayTR.PosSelection.Jobs.Jobs
                 await _redis.Set(versionKey, ratiosJson);
                 
                 // api hala istekte bulunuyor o yüzden resultları cacheye yazmayı durdur
+                // buraya timeout eklenmeliydi
                 await _redis.Set("pos-selection:cache-disabled", "1");
                 
                 // apinin set ettiği tüm resultları cache'den sil
@@ -82,6 +85,10 @@ namespace PayTR.PosSelection.Jobs.Jobs
             catch (Exception e)
             {
                 _logger.LogError(e, "Error occurred while fetching POS ratios.");
+            }
+            finally
+            {
+                await _redis.Delete("pos-selection:cache-disabled");  
             }
             _logger.LogInformation("PosRatiosSyncJob finished at {time}", DateTimeOffset.Now);
         }
